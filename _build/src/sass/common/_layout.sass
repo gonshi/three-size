@@ -1,0 +1,56 @@
+.sp
+  display: none
+
+.wrapper
+  position: absolute
+  +trbl(0, 0, 0, 0)
+  min-width: 1200px
+  min-height: 600px
+  +bg("common/bg.jpg", cover)
+
+  .ttl
+    +image-size("common/ttl.png", 1.2)
+    margin: 40px auto 0
+
+  .boy
+    position: absolute
+    +trbl(auto, auto, 40px, 120px)
+    +sprite("boy/body.png", 3)
+
+    &.shock
+      +sprite-position("boy/body.png", 3, 1)
+    &.surprised
+      +sprite-position("boy/body.png", 3, 2)
+
+  .girl
+    $bg: "girl/body.png"
+    $parts: "top", "middle", "bottom"
+    position: absolute
+    +trbl(auto, 200px, 40px, auto)
+    +image-size($bg)
+    +bg($bg)
+
+    .parts
+      box-sizing: content-box
+      border: 4px solid #000
+
+    // パーツごと
+    @each $p in $parts
+      .#{$p}
+        position: absolute
+        +trbl(auto, 0, auto, 0)
+        +sprite("girl/#{$p}.png", 3)
+        margin: auto
+
+        @for $i from 1 to 4
+          &[data-size="#{$i}"]
+            +sprite-position("girl/#{$p}.png", 3, $i - 1)
+
+    .top
+      top: 140px
+
+    .middle
+      top: 257px
+
+    .bottom
+      top: 360px

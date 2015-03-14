@@ -6,6 +6,7 @@
   +trbl(0, 0, 0, 0)
   min-width: 1200px
   min-height: 600px
+  overflow: hidden
   +bg("common/bg.jpg", cover)
 
   .ttl
@@ -14,8 +15,10 @@
 
   .boy
     position: absolute
-    +trbl(auto, auto, 40px, 120px)
+    +trbl(auto, auto, 40px, 50%)
     +sprite("boy/body.png", 3)
+    margin-left: -600px
+    +transform-origin(center, bottom)
 
     &.shock
       +sprite-position("boy/body.png", 3, 1)
@@ -26,31 +29,134 @@
     $bg: "girl/body.png"
     $parts: "top", "middle", "bottom"
     position: absolute
-    +trbl(auto, 200px, 40px, auto)
+    +trbl(auto, auto, 40px, 50%)
     +image-size($bg)
+    margin-left: 250px
     +bg($bg)
+    +transform-origin(center, bottom)
 
     .parts
+      position: absolute
+      margin: auto
       box-sizing: content-box
       border: 4px solid #000
 
-    // パーツごと
-    @each $p in $parts
-      .#{$p}
+      button
         position: absolute
-        +trbl(auto, 0, auto, 0)
-        +sprite("girl/#{$p}.png", 3)
+        +trbl(0, 0, 0, 0)
+
+      // パーツごと
+      @each $p in $parts
+        &.#{$p}
+          +trbl(auto, 0, auto, 0)
+          +sprite("girl/#{$p}.png", 3)
+
+          @for $i from 1 to 4
+            &[data-size="#{$i}"]
+              +sprite-position("girl/#{$p}.png", 3, $i - 1)
+
+      &.top
+        top: 140px
+
+      &.middle
+        top: 257px
+
+      &.bottom
+        top: 360px
+
+    .value
+      $left: 240px
+      position: absolute
+      line-height: 1em
+      color: #fff
+      font-size: 48px
+      letter-spacing: 3px
+      +open-face(#000)
+      opacity: 0
+
+      .unit
+        font-size: 32px
+
+      &.top
+        +trbl(192px, auto, auto, $left)
+
+      &.middle
+        +trbl(295px, auto, auto, $left)
+
+      &.bottom
+        +trbl(405px, auto, auto, $left)
+
+    .guard
+      position: absolute
+      +trbl(0, 0, 0, 0)
+
+  .result_container
+    display: none
+    position: absolute
+    +trbl(0, 0, 0, -60px)
+    width: 30%
+    height: 80%
+    margin: auto
+    opacity: 0
+
+    .again
+      position: absolute
+      +trbl(auto, 0, 0, 0)
+      // 初期状態では80%の大きさに指定(アニメーションで100%状態にする)
+      width: 80%
+      height: 12% * 0.8
+      margin: auto
+      font-size: 32px
+      background: #fff
+      box-shadow: 0 0 2px 5px #000
+      border-radius: 20px
+      opacity: 0
+      @extend %hoverEffect
+
+      .text
+        position: absolute
+        +trbl(0, 0, 0, 0)
+        height: 1em
         margin: auto
+        font-weight: bold
 
-        @for $i from 1 to 4
-          &[data-size="#{$i}"]
-            +sprite-position("girl/#{$p}.png", 3, $i - 1)
+  .result
+    position: relative
+    width: 100%
+    height: 80%
+    padding: 20px
+    background-color: rgba(255, 255, 255, 0.9) 
+    box-shadow: 0 0 4px 10px #000
+    border-radius: 20px
 
-    .top
-      top: 140px
+    .name
+      line-height: 1em
+      font-size: 36px
+      font-weight: bold
 
-    .middle
-      top: 257px
+    .pic_container
+      width: 100%
+      height: calc(100% - 74px)
+      margin-top: 20px
 
-    .bottom
-      top: 360px
+      .pic
+        width: 48%
+        height: 47.5%
+        background-size: contain
+        background-repeat: no-repeat
+        background-position: center center
+
+        &:nth-child(odd)
+          float: left
+        &:nth-child(even)
+          float: right
+        &:nth-child(n+3)
+          margin-top: 3%
+
+    .notice
+      position: absolute
+      +trbl(auto, 20px, 20px, auto)
+      font-size: 11px
+
+.hiragino
+  font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', sans-serif

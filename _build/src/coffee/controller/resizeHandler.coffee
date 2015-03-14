@@ -7,10 +7,10 @@ class ResizeHandler extends EventDispatcher
     super()
 
   exec: ->
-    throttle = new Throttle 100
+    throttle = new Throttle 300
 
     $( window ).on "resize", =>
-      throttle.exec => @dispatch "RESIZED", this
+      throttle.last => @dispatch "RESIZED", this
 
   off: -> $( window ).off "resize"
 

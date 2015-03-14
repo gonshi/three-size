@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>THREE SIZE</title>
+    <meta name="description" content="スリーサイズをスロットで揃えると、そのボディの女性や男性が現れるよ！">
+    <meta name="keywords" content="スリーサイズ, スロット, グラビア">
+    <meta property="og:title" content="THREE SIZE">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://gonshi.github.io/three-size">
+    <meta property="og:image" content="http://gonshi.github.io/three-size/img/ogp.jpg">
+    <meta property="og:site_name" content="gonshi.github.io">
+    <meta property="og:description" content="スリーサイズをスロットで揃えると、そのボディの女性や男性が現れるよ！">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="THREE SIZE">
+    <meta name="twitter:description" content="スリーサイズをスロットで揃えると、そのボディの女性や男性が現れるよ！">
+    <meta name="twitter:image:src" content="http://gonshi.github.io/three-size/img/ogp.jpg">
+    <meta name="viewport" content="width=640, minimum-scale=0.5, maximum-scale=0.5, user-scalable=yes">
+    <link rel="stylesheet" href="css/main.css" media="screen, print">
+    <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="favicon.ico">
+    <link rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico">
+    <link href="http://fonts.googleapis.com/css?family=Luckiest+Guy" rel="stylesheet" type="text/css">
+    <!-- script(type="text/javascript" src="//media.line.me/js/line-button.js?v=20140411")--><!--[if lte IE 9]>
+    <script src="js/html5shiv.js"></script><![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <h1 class="ttl"><img src="img/common/ttl.png" alt="THREE SIZE"></h1>
+      <p class="boy"></p>
+      <div class="girl">
+        <p data-type="top" class="parts top">
+          <button></button>
+        </p>
+        <p class="value top"><span class="length"></span><span class="unit">cm</span></p>
+        <p data-type="middle" class="parts middle">
+          <button></button>
+        </p>
+        <p class="value middle"><span class="length"></span><span class="unit">cm</span></p>
+        <p data-type="bottom" class="parts bottom">
+          <button></button>
+        </p>
+        <p class="value bottom"><span class="length"></span><span class="unit">cm</span></p>
+        <!-- ローディング中クリック防止用-->
+        <p class="guard"></p>
+      </div>
+      <div class="result_container">
+        <div class="result">
+          <p class="name hiragino"></p>
+          <div class="pic_container">
+            <p class="pic num1"></p>
+            <p class="pic num2"></p>
+            <p class="pic num3"></p>
+            <p class="pic num4"></p>
+          </div>
+          <p class="notice hiragino">※ Google Custom Search API</p>
+        </div>
+        <p class="again">
+          <button><span class="text">もういちど</span></button>
+        </p>
+      </div>
+    </div>
+    <script>
+      var ua = window.navigator.userAgent;
+      if ( ( /ipod|iphone|ipad|android/i ).test( ua ) ){
+        var i;
+        var pc_contents = document.querySelectorAll( ".pc" );
+        var pc_contentsLength = pc_contents.length;
+        var sp_contents = document.querySelectorAll( ".sp" );
+        var sp_contentsLength = sp_contents.length;
+        
+        window.isSp = true;
+        document.body.classList.add( "is_sp" );
+        
+        for ( i = 0; i < pc_contentsLength; i++ ){
+          pc_contents[ i ].style.display = "none";
+        }
+        for ( i = 0; i < sp_contentsLength; i++ ){
+          sp_contents[ i ].style.display = "block";
+        }
+        
+        if ( ( /ipad|iphone|ipad/i ).test( ua ) ){
+          // set meta viewport
+          document.querySelector( 'meta[name="viewport"]' ).setAttribute(
+            "content", "width=640, minimum-scale=0.25, maximum-scale=1.6, user-scalable=no"
+          );
+        }
+        // android
+        else if ( ( /android/i ).test( ua ) ){
+          document.body.style.zoom = window.innerWidth / 640;
+        }
+      }
+      else{
+        window.isSp = false;
+      }
+    </script>
+    <!--[if (!IE)|(gt IE 8)]>
+    <!-->
+    <script src="js/jquery-2.1.3.min.js"></script><!--<![endif]--><!--[if lte IE 8]>
+    <script src="js/jquery-1.11.2.min.js"></script><![endif]-->
+    <script src="js/app.min.js"></script>
+    <div id="fb-root"></div>
+    <script>
+      (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&appId=1548831858693621&version=v2.0";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <script>
+      window.twttr = (function (d,s,id) {
+        var t, js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+          js=d.createElement(s);
+          js.id=id;
+          js.src="https://platform.twitter.com/widgets.js";
+          fjs.parentNode.insertBefore(js, fjs);
+          return window.twttr || (t = {
+            _e: [],
+            ready: function(f){
+              t._e.push(f)
+            }
+          });
+      }(document, "script", "twitter-wjs"));
+    </script>
+  </body>
+</html>

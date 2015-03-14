@@ -5,6 +5,32 @@ block body
       img(src="img/common/ttl.png" alt="THREE SIZE")
     p.boy
     div.girl
-      p.parts.top
-      p.parts.middle
-      p.parts.bottom
+      p.parts.top(data-type="top")
+        button
+      p.value.top
+        span.length
+        span.unit cm
+      p.parts.middle(data-type="middle")
+        button
+      p.value.middle
+        span.length
+        span.unit cm
+      p.parts.bottom(data-type="bottom")
+        button
+      p.value.bottom
+        span.length
+        span.unit cm
+      // ローディング中クリック防止用
+      p.guard
+    div.result_container
+      div.result
+        p.name.hiragino
+        div.pic_container
+          p.pic.num1
+          p.pic.num2
+          p.pic.num3
+          p.pic.num4
+        p.notice.hiragino ※ Google Custom Search API
+      p.again
+        button
+          span.text もういちど

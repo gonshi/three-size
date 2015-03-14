@@ -27,11 +27,14 @@
 
 =sprite($img, $num)
   width: image-width($img)
-  height: image-height($img) / $num
+  height: floor(image-height($img) / $num)
   background-image: image-url($img)
   background-size: 100% auto
-  +sprite-position($img, 0, $num)
+  +sprite-position($img, $num, 0)
   @extend %hideText
 
 =sprite-position($img, $totalNum, $num)
   background-position: 0 -1 * image-height($img) / $totalNum * $num
+
+=open-face($color)
+  text-shadow: 2px 0px 0px $color, -1.74661px -0.97435px 0px $color, 1.05064px 1.70181px 0px $color, -0.08846px -1.99804px 0px $color, -0.89615px 1.78799px 0px $color, 1.65367px -1.12488px 0px $color, -1.99218px 0.17674px 0px $color, 1.82588px 0.81619px 0px $color, -1.19692px -1.60231px 0px $color, 0.26467px 1.98241px 0px $color, 0.73464px -1.86019px 0px $color, -1.5478px 1.26662px 0px $color, 1.96876px -0.35209px 0px $color, -1.89086px -0.65165px 0px $color, 1.33383px 1.49027px 0px $color, -0.43882px -1.95127px 0px $color, -0.56738px 1.91783px 0px $color

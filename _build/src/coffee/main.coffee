@@ -132,10 +132,10 @@ $ ->
     $girl.css transform: "scale(#{ _scale })"
     $boy.css transform: "scale(#{ _scale })"
 
-  imgData.listen "IMG_LOADED", ( items )->
-    for i in [ 0...items.length ]
+  imgData.listen "IMG_LOADED", ( results )->
+    for i in [ 0...results.length ]
       $pic.eq( i ).css
-        "background-image": "url(#{ items[ i ].image.thumbnailLink })"
+        "background-image": "url(#{ results[ i ].tbUrl })"
 
   $again.on "click", ->
     # reset

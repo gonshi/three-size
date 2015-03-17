@@ -14,16 +14,35 @@
     margin: 40px auto 0
 
   .boy
+    $expression: "normal", "wait", "think", "boring", "surprised", "happy"
     position: absolute
     +trbl(auto, auto, 40px, 50%)
-    +sprite("boy/body.png", 3)
+    +sprite("boy/body.png", 6)
     margin-left: -600px
     +transform-origin(center, bottom)
 
-    &.shock
-      +sprite-position("boy/body.png", 3, 1)
-    &.surprised
-      +sprite-position("boy/body.png", 3, 2)
+    @for $i from 0 to length($expression)
+      &.#{nth($expression, $i + 1)}
+        +sprite-position("boy/body.png", 6, $i)
+
+    &:before
+      $bg: "common/balloon-small.png"
+      position: absolute
+      +trbl(10px, -120px, auto, auto)
+      +image-size($bg)
+      +bg($bg)
+      opacity: 0
+      +transition(all 0.9s ease 0s)
+      content: ""
+
+    &.think
+      &:before
+        +translate(10px, -10px)
+        opacity: 1
+
+    &.happy
+      &:before
+        display: none
 
   .girl
     $bg: "girl/body.png"
@@ -94,8 +113,8 @@
     display: none
     position: absolute
     +trbl(0, 0, 0, -60px)
-    width: 30%
-    height: 80%
+    width: 40%
+    height: 85%
     margin: auto
     opacity: 0
 
@@ -103,7 +122,7 @@
       position: absolute
       +trbl(auto, 0, 0, 0)
       // 初期状態では80%の大きさに指定(アニメーションで100%状態にする)
-      width: 80%
+      width: 70%
       height: 12% * 0.8
       margin: auto
       font-size: 32px
@@ -124,10 +143,18 @@
     position: relative
     width: 100%
     height: 80%
-    padding: 20px
-    background-color: rgba(255, 255, 255, 0.9) 
-    box-shadow: 0 0 4px 10px #000
-    border-radius: 20px
+    padding: 12% 15% 7%
+    +bg("common/balloon.png", 100% 100%)
+
+    &:before
+      $bg: "common/balloon-effect.png"
+      $ratio: 2.8
+      position: absolute
+      +trbl(0, auto, 0, image-width($bg) * -1 / $ratio - 5px)
+      +image-size($bg, $ratio)
+      margin: auto
+      +bg($bg)
+      content: ""
 
     .name
       line-height: 1em
@@ -155,8 +182,8 @@
 
     .notice
       position: absolute
-      +trbl(auto, 20px, 20px, auto)
-      font-size: 11px
+      +trbl(auto, 15%, 8%, auto)
+      font-size: 10px
 
 .hiragino
   font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', sans-serif

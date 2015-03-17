@@ -1,10 +1,10 @@
 instance = null
 
 class Ticker
-  if window?.performance?.now?
-    getNow = -> window.performance.now()
+  if window.performance?
+    window.getNow = -> window.performance.now()
   else
-    getNow = -> Date.now()
+    window.getNow = -> Date.now()
 
   if window.requestAnimationFrame?
     window.requestAnimFrame = window.requestAnimationFrame

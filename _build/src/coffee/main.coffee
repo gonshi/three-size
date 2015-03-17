@@ -35,6 +35,7 @@ $ ->
   $again = $( ".result_container .again" )
 
   chara_next = null
+  sex_next = null
   selected =
     top: false
     middle: false
@@ -58,14 +59,23 @@ $ ->
 
   MIN_HEIGHT = 900
 
+  _count = 0 # プレゼン用
+
   #####################################
   # PRIVATE
   #####################################
   
-  _setNextChara = ( sex )->
-    _index = Math.floor( Math.random() * window.size[ sex ].length )
-    chara_next = window.size[ sex ][ _index ]
-    window.size[ sex ].splice _index, 1
+  _setNextChara = ->
+    _count += 1
+    if _count == 4
+      sex_next = "man"
+    else if _count == 6
+      sex_next = "other"
+    else
+      sex_next = "woman"
+    _index = Math.floor( Math.random() * window.size[ sex_next ].length )
+    chara_next = window.size[ sex_next ][ _index ]
+    window.size[ sex_next ].splice _index, 1
 
   #####################################
   # EVENT LISTENER
@@ -75,7 +85,7 @@ $ ->
     if window.size.woman?
       ticker.clear "checkLoad"
       $( ".girl .guard" ).hide()
-      _setNextChara "woman"
+      _setNextChara()
 
       ticker.listen "slot", ( t )->
         if !selected.top
@@ -109,19 +119,35 @@ $ ->
       scale: _scale
     , 400, "spring"
 
+    # 3つそろった
     if selected.top && selected.middle && selected.bottom
+      setTimeout (-> $boy.addClass "think" ), 1000
       $result.find( ".name" ).text chara_next.name
-      $result.show().delay( 1000 ).velocity
-        opacity: 1
-        translateX: 30
-      , 1000
       imgData.getData chara_next.name
 
-      # もう一度ボタンは遅れて表示
-      $again.delay( 3000 ).velocity
-        opacity: 1
-        scale: 1 / 0.8
-      , 300, "spring"
+      # 考えるポーズの時間しばらく待機
+      setTimeout ->
+        if sex_next == "man"
+          $boy.removeClass( "think" ).addClass( "surprised" ).velocity
+            translateX: -80
+          , 400, "spring"
+        else # woman or other
+          $boy.removeClass( "think" ).addClass( "happy" ).velocity
+            translateX: -80
+            translateY: -20
+          , 300
+          
+        $result.show().velocity
+          opacity: 1
+          translateX: 30
+        , 1000
+
+        # もう一度ボタンは遅れて表示
+        $again.delay( 2000 ).velocity
+          opacity: 1
+          scale: 1 / 0.8
+        , 300, "spring"
+      , 2500 + Math.random() * 1500
 
   resizeHandler.listen "RESIZED", ->
     _win_height = $( window ).height()
@@ -139,7 +165,11 @@ $ ->
 
   $again.on "click", ->
     # reset
-    _setNextChara "woman"
+    $boy.removeClass().addClass( "boy" ).velocity
+      translateX: 0
+      translateY: 0
+    , 50
+    _setNextChara()
 
     $value.velocity
       opacity: 0

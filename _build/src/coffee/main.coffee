@@ -33,6 +33,7 @@ $ ->
   $result = $( ".result_container" )
   $pic = $( ".result .pic" )
   $again = $( ".result_container .again" )
+  chara_scale = null
 
   chara_next = null
   sex_next = null
@@ -67,7 +68,9 @@ $ ->
   
   _setNextChara = ->
     _count += 1
-    if _count == 4
+    if _count == 3
+      sex_next = "chara"
+    else if _count == 4
       sex_next = "man"
     else if _count == 6
       sex_next = "other"
@@ -126,15 +129,18 @@ $ ->
       imgData.getData chara_next.name
 
       # 考えるポーズの時間しばらく待機
+      _addWait = if _count == 1 then 1000 else 0
       setTimeout ->
         if sex_next == "man"
           $boy.removeClass( "think" ).addClass( "surprised" ).velocity
             translateX: -80
+            scale: chara_scale
           , 400, "spring"
         else # woman or other
           $boy.removeClass( "think" ).addClass( "happy" ).velocity
             translateX: -80
             translateY: -20
+            scale: chara_scale
           , 300
           
         $result.show().velocity
@@ -147,16 +153,16 @@ $ ->
           opacity: 1
           scale: 1 / 0.8
         , 300, "spring"
-      , 2500 + Math.random() * 1500
+      , 2500 + Math.random() * 1500 + _addWait
 
   resizeHandler.listen "RESIZED", ->
     _win_height = $( window ).height()
     if _win_height < MIN_HEIGHT
-      _scale = _win_height / MIN_HEIGHT
+      chara_scale = _win_height / MIN_HEIGHT
     else
-      _scale = 1
-    $girl.css transform: "scale(#{ _scale })"
-    $boy.css transform: "scale(#{ _scale })"
+      chara_scale = 1
+    $girl.velocity scale: chara_scale, 1
+    $boy.velocity scale: chara_scale, 1
 
   imgData.listen "IMG_LOADED", ( results )->
     for i in [ 0...results.length ]

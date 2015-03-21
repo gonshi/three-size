@@ -9,9 +9,19 @@
   overflow: hidden
   +bg("common/bg.jpg", cover)
 
+  #{$is_sp}
+    width: 640px
+    min-width: 0
+    min-height: 0
+    +bg("common/bg_sp.jpg", cover)
+
   .ttl
     +image-size("common/ttl.png", 1.2)
     margin: 40px auto 0
+
+    #{$is_sp}
+      +image-size("common/ttl.png", 2)
+      margin-top: 40px
 
   .boy
     $expression: "normal", "wait", "think", "boring", "surprised", "happy"
@@ -20,6 +30,12 @@
     +sprite("boy/body.png", 6)
     margin-left: -600px
     +transform-origin(center, bottom)
+
+    #{$is_sp}
+      top: 50%
+      bottom: auto
+      margin: -240px auto auto -420px
+      +scale(0.8)
 
     @for $i from 0 to length($expression)
       &.#{nth($expression, $i + 1)}
@@ -34,6 +50,9 @@
       opacity: 0
       +transition(all 0.9s ease 0s)
       content: ""
+
+      #{$is_sp}
+        +trbl(-80px, -40px, auto, auto)
 
     &.think
       &:before
@@ -53,6 +72,11 @@
     margin-left: 250px
     +bg($bg)
     +transform-origin(center, bottom)
+
+    #{$is_sp}
+      top: 50%
+      bottom: auto
+      margin: -280px auto auto 50px
 
     .parts
       position: absolute
@@ -93,8 +117,14 @@
       +open-face(#000)
       opacity: 0
 
+      #{$is_sp}
+        $left: -80px
+
       .unit
         font-size: 32px
+
+        #{$is_sp}
+          font-size: 24px
 
       &.top
         +trbl(192px, auto, auto, $left)
@@ -117,6 +147,10 @@
     height: 85%
     margin: auto
     opacity: 0
+
+    #{$is_sp}
+      +trbl(0, 0, 0, 0)
+      width: 75%
 
     .again
       position: absolute
@@ -146,6 +180,10 @@
     padding: 12% 15% 7%
     +bg("common/balloon.png", 100% 100%)
 
+    #{$is_sp}
+      padding: 20% 15% 7%
+      +translate(40px, 40px)
+
     &:before
       $bg: "common/balloon-effect.png"
       $ratio: 2.8
@@ -155,6 +193,11 @@
       margin: auto
       +bg($bg)
       content: ""
+
+      #{$is_sp}
+        +trbl(auto, auto, 44%, image-width($bg) * -1 / $ratio + 10px)
+        top: auto
+        +scale(0.6)
 
     .name
       line-height: 1em

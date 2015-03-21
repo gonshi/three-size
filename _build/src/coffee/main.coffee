@@ -103,7 +103,17 @@ $ ->
   $noticeContainer.find( ".notice-yes" ).on "click", ->
     $noticeContainer.velocity
       opacity: 0
-    , -> $noticeContainer.hide()
+    , ->
+      $noticeContainer.hide()
+      # 一定時間以上クリックされなければ、アドバイス吹き出しを表示
+      setTimeout ->
+        for i of selected
+          return if selected[ i ]
+        $( ".girl .advice" ).show().velocity
+          opacity: 1
+          translateX: -30
+        setTimeout (-> $( ".girl .advice" ).hide() ), 4000
+      , 2000
 
   $( ".girl .parts" ).on "click", ->
     _type = $( this ).data "type"
@@ -186,8 +196,8 @@ $ ->
       $pic.eq( i ).css
         "background-image": "url(#{ results[ i ].tbUrl })"
 
+  # reset
   $again.on "click", ->
-    # reset
     $boy.removeClass().addClass( "boy" ).velocity
       translateX: 0
       translateY: 0
@@ -226,3 +236,7 @@ $ ->
   if ( ( /android/i ).test( window.navigator.userAgent ) )
     window.onload = ->
       document.body.style.zoom = window.innerWidth / 640
+
+  if window.isSp
+    $( ".girl .advice" ).html(
+      $( ".girl .advice" ).html().replace( "クリック", "タップ" ) )

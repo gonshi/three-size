@@ -142,6 +142,34 @@
       position: absolute
       +trbl(0, 0, 0, 0)
 
+    .advice
+      display: none
+      position: absolute
+      +trbl(-90px, auto, 0, -320px)
+      width: 300px
+      height: 140px
+      padding: 20px
+      margin: auto
+      font-size: 24px
+      background: #fff
+      box-shadow: 0 0 3px 3px #000
+      border-radius: 15px
+      opacity: 0
+
+      #{$is_sp}
+        top: -340px
+
+      &:after
+        position: absolute
+        +trbl(0, -18px, 0, auto)
+        width: 40px
+        height: 40px
+        margin: auto
+        background-color: #fff
+        box-shadow: 4px -4px 1px 0 #000
+        +rotate(45deg)
+        content: ""
+
   .result_container
     display: none
     position: absolute
@@ -267,17 +295,29 @@
     position: absolute
     top: 270px
     left: 50%
-    @extend %hoverEffect
-    @extend %activeEffect
 
     #{$is_sp}
       top: 180px
 
   .notice-yes
-    margin-left: -170px
+    $img: "common/notice-yes.png"
+    $addPx: 50px
+    width: image-width($img) + $addPx
+    height: image-height($img) + $addPx
+    margin: -$addPx / 2 auto auto -170px - $addPx / 2
+
+    button
+      position: absolute
+      +trbl(0, 0, 0, 0)
+      +image-size($img)
+      margin: auto
+      @extend %hoverEffect
+      @extend %activeEffect
 
   .notice-no
     margin: -5px auto auto 50px
+    @extend %hoverEffect
+    @extend %activeEffect
 
 .hiragino
   font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', sans-serif

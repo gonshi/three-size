@@ -34,6 +34,7 @@ $ ->
   $result = $( ".result_container" )
   $pic = $( ".result .pic" )
   $again = $( ".result_container .again" )
+  $noticeContainer = $( ".notice_container" )
   chara_scale = null
 
   chara_next = null
@@ -98,6 +99,11 @@ $ ->
           $middle.attr "data-size": ( parseInt( t / 80 ) % 3 ) + 1
         if !selected.bottom
           $bottom.attr "data-size": ( parseInt( t / 120 ) % 3 ) + 1
+
+  $noticeContainer.find( ".notice-yes" ).on "click", ->
+    $noticeContainer.velocity
+      opacity: 0
+    , -> $noticeContainer.hide()
 
   $( ".girl .parts" ).on "click", ->
     _type = $( this ).data "type"

@@ -22,7 +22,7 @@ class ImgData extends EventDispatcher
     ###
     _src = "http://ajax.googleapis.com/ajax/services/" +
            "search/images?v=1.0&callback=response" +
-           "&q=#{ query }&start=0&rsz=4"
+           "&q=#{ encodeURIComponent query }&start=0&rsz=4"
     $( "head" ).append( $( "<script>" ).attr src: _src )
 
 getInstance = ->

@@ -167,7 +167,7 @@
       box-shadow: 0 0 2px 5px #000
       border-radius: 20px
       opacity: 0
-      @extend %hoverEffect
+      @extend %hoverEffect-opacity
 
       .text
         position: absolute
@@ -239,19 +239,19 @@
     +trbl(0, 0, 0, 0)
     background: rgba(0, 0, 0, 0.85)
 
-  .notice
-    position: absolute
-    +trbl(0, 0, 0, 0)
-    width: 960px
-    height: 480px
-    margin: auto
-    background: rgba(255, 255, 255, 0.8)
-    border-radius: 20px
-    box-shadow: 0 0 10px 5px #000
+    .notice
+      position: absolute
+      +trbl(0, 0, 0, 0)
+      width: 960px
+      height: 480px
+      margin: auto
+      background: rgba(255, 255, 255, 0.8)
+      border-radius: 20px
+      box-shadow: 0 0 10px 5px #000
 
-    #{$is_sp}
-      width: 600px
-      height: 300px
+      #{$is_sp}
+        width: 600px
+        height: 300px
 
   .notice-txt
     $img: "common/notice-txt.png"

@@ -249,11 +249,6 @@ $ ->
     $result.find( ".pic_container" ).css
       height: $( window ).height() / _zoom * 0.85 * 0.8 * 0.81 - 71
 
-  if ( /msie|trident/i ).test window.navigator.userAgent
-    # css calc bug fix
-    $result.find( ".pic_container" ).css
-      height: $( window ).height() / _zoom * 0.85 * 0.8 * 0.81 - 71
-
   if window.isSp
     $( ".girl .advice" ).html(
       $( ".girl .advice" ).html().replace( "クリック", "タップ" ) )

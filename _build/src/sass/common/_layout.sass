@@ -117,9 +117,6 @@
       +open-face(#000)
       opacity: 0
 
-      #{$is_sp}
-        $left: -80px
-
       .unit
         font-size: 32px
 
@@ -134,6 +131,12 @@
 
       &.bottom
         +trbl(405px, auto, auto, $left)
+
+      #{$is_sp}
+        &.top,
+        &.middle,
+        &.bottom
+          left: -80px
 
     .guard
       position: absolute
@@ -230,6 +233,51 @@
 
       #{$is_sp}
         bottom: 6%
+
+  .notice_container
+    position: absolute
+    +trbl(0, 0, 0, 0)
+    background: rgba(0, 0, 0, 0.85)
+
+  .notice
+    position: absolute
+    +trbl(0, 0, 0, 0)
+    width: 960px
+    height: 480px
+    margin: auto
+    background: rgba(255, 255, 255, 0.8)
+    border-radius: 20px
+    box-shadow: 0 0 10px 5px #000
+
+    #{$is_sp}
+      width: 600px
+      height: 300px
+
+  .notice-txt
+    $img: "common/notice-txt.png"
+    +image-txt($img)
+    margin: 120px auto 0
+
+    #{$is_sp}
+      +image-size($img, 1.4)
+      margin-top: 80px
+
+  .notice-yes,
+  .notice-no
+    position: absolute
+    top: 270px
+    left: 50%
+    @extend %hoverEffect
+    @extend %activeEffect
+
+    #{$is_sp}
+      top: 180px
+
+  .notice-yes
+    margin-left: -170px
+
+  .notice-no
+    margin: -5px auto auto 50px
 
 .hiragino
   font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', sans-serif

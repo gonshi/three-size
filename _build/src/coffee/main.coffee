@@ -241,12 +241,13 @@ $ ->
   resizeHandler.dispatch "RESIZED", resizeHandler
 
   if window.isAndroid
+    _zoom = window.innerWidth / 640
     window.onload = ->
-      document.body.style.zoom = window.innerWidth / 640
+      document.body.style.zoom = _zoom
 
     # css calc bug fix
     $result.find( ".pic_container" ).css
-      height: $( window ).height() * 0.85 * 0.8 * 0.81 - 71
+      height: $( window ).height() / _zoom * 0.85 * 0.8 * 0.81 - 71
 
   if window.isSp
     $( ".girl .advice" ).html(

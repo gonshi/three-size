@@ -171,8 +171,8 @@ $ ->
       chara_scale = 1
 
     if !window.isSp
-      $girl.velocity scale: chara_scale, 1
-    $boy.velocity scale: chara_scale, 1
+      $girl.velocity scale: chara_scale, 30
+    $boy.velocity scale: chara_scale, 30
 
   imgData.listen "IMG_LOADED", ( results )->
     for i in [ 0...results.length ]

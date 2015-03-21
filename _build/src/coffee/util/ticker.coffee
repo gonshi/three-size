@@ -1,7 +1,7 @@
 instance = null
 
 class Ticker
-  if window.performance?
+  if window.performance?.now?
     window.getNow = -> window.performance.now()
   else
     window.getNow = -> Date.now()
@@ -18,7 +18,7 @@ class Ticker
 
   constructor: ->
     @listeners = {}
-    @start = []
+    @start = {}
 
     ################################
     # PRIVATE
@@ -31,7 +31,7 @@ class Ticker
     _renderer()
 
   listen: ( name, func )->
-    @start[ name ] = getNow()
+    @start[ name ] = window.getNow()
     @listeners[ name ] = func
 
   clear: ( name )->

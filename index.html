@@ -96,14 +96,17 @@
           document.querySelector( 'meta[name="viewport"]' ).setAttribute(
             "content", "width=640, minimum-scale=0.25, maximum-scale=1.6, user-scalable=no"
           );
+          window.isAndroid = false;
         }
         // android
         else if ( ( /android/i ).test( ua ) ){
           document.body.style.zoom = window.innerWidth / 640;
+          window.isAndroid = true;
         }
       }
       else{
         window.isSp = false;
+        window.isAndroid = false;
       }
     </script>
     <!--[if (!IE)|(gt IE 8)]>

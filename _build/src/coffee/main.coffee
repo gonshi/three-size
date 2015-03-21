@@ -104,7 +104,7 @@ $ ->
           $middle.attr "data-size": ( parseInt( t / 80 ) % 3 ) + 1
         if !selected.bottom
           $bottom.attr "data-size": ( parseInt( t / 120 ) % 3 ) + 1
-
+  
   $noticeContainer.find( ".notice-yes" ).on "click", ->
     $noticeContainer.velocity
       opacity: 0
@@ -240,9 +240,13 @@ $ ->
   resizeHandler.exec()
   resizeHandler.dispatch "RESIZED", resizeHandler
 
-  if ( ( /android/i ).test( window.navigator.userAgent ) )
+  if window.isAndroid
     window.onload = ->
       document.body.style.zoom = window.innerWidth / 640
+
+    # css calc bug fix
+    $result.find( ".pic_container" ).css
+      height: $( window ).height() * 0.85 * 0.8 * 0.81 - 71
 
   if window.isSp
     $( ".girl .advice" ).html(

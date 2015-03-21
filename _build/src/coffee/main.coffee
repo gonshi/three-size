@@ -60,17 +60,16 @@ $ ->
       min: 80
       range: 30
 
+  is_first = true
+
   ORIGINAL_SIZE = []
   MIN_HEIGHT = 900
-
-  _count = 0 # プレゼン用
 
   #####################################
   # PRIVATE
   #####################################
   
   _setNextChara = ->
-    _count += 1
     _random = Math.random()
     if _random < 0.1 # 10%
       sex_next = "chara"
@@ -153,7 +152,8 @@ $ ->
       imgData.getData chara_next.name
 
       # 考えるポーズの時間しばらく待機
-      _addWait = if _count == 1 then 1000 else 0
+      _addWait = if is_first then 1000 else 0 # 1回目は少し考える時間長く見せる
+      is_first = false
       setTimeout ->
         _vec = if window.isSp then 0 else 1
         if sex_next == "man"
@@ -173,7 +173,7 @@ $ ->
           translateX: 30
         , 1000
 
-        $value.velocity opacity: 0, 300
+        $value.velocity opacity: 0, 300 if window.isSp
 
         # もう一度ボタンは遅れて表示
         _x = if window.isSp then 30 else 0
@@ -211,6 +211,7 @@ $ ->
     _setNextChara()
 
     $value.velocity
+      opacity: 0
       translateX: 0
       scale: 1
 

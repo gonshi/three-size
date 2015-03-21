@@ -14,6 +14,7 @@ else
     window.DEBUG = state: false
 
 require "../js/velocity.min.js"
+require "./model/preload"
 ticker = require( "./util/ticker" )()
 resizeHandler = require( "./controller/resizeHandler" )()
 sizeData = require( "./model/sizeData" )()

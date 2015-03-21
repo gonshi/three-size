@@ -60,6 +60,7 @@ $ ->
       min: 80
       range: 30
 
+  ORIGINAL_SIZE = []
   MIN_HEIGHT = 900
 
   _count = 0 # プレゼン用
@@ -70,17 +71,20 @@ $ ->
   
   _setNextChara = ->
     _count += 1
-    if _count == 3
+    _random = Math.random()
+    if _random < 0.1 # 10%
       sex_next = "chara"
-    else if _count == 4
+    else if _random < 0.2 # 10%
       sex_next = "man"
-    else if _count == 6
-      sex_next = "other"
-    else
+    else # 80%
       sex_next = "woman"
     _index = Math.floor( Math.random() * window.size[ sex_next ].length )
     chara_next = window.size[ sex_next ][ _index ]
     window.size[ sex_next ].splice _index, 1
+
+    if window.size[ sex_next ].length == 0
+      # 全て出し尽くしたらデータを再生
+      window.size[ sex_next ] = ORIGINAL_SIZE[ sex_next ].concat()
 
   #####################################
   # EVENT LISTENER
@@ -88,6 +92,8 @@ $ ->
 
   ticker.listen "checkLoad", ->
     if window.size.woman?
+      for sex of window.size
+        ORIGINAL_SIZE[ sex ] = window.size[ sex ].concat()
       ticker.clear "checkLoad"
       $( ".girl .guard" ).hide()
       _setNextChara()
@@ -240,3 +246,6 @@ $ ->
   if window.isSp
     $( ".girl .advice" ).html(
       $( ".girl .advice" ).html().replace( "クリック", "タップ" ) )
+
+  if window.location.hash == "#skip" # three codesから飛んできた場合
+    $( ".notice_container .notice-yes" ).trigger "click"

@@ -65,6 +65,11 @@ $ ->
   ORIGINAL_SIZE = []
   MIN_HEIGHT = 900
 
+  click_sound = new Audio()
+  click_sound.src = "audio/3.wav"
+  result_sound = new Audio()
+  result_sound.src = "audio/result.mp3"
+
   #####################################
   # PRIVATE
   #####################################
@@ -126,6 +131,8 @@ $ ->
     _$value.find( ".length" ).text chara_next[ _type ]
     selected[ _type ] = true
 
+    click_sound.play()
+
     # サイズの画を描画
     for i in [ 0...size_anchor[ _type ].length ]
       if parseInt( chara_next[ _type ] ) > size_anchor[ _type ][ i ]
@@ -151,6 +158,9 @@ $ ->
       $result.find( ".name" ).text chara_next.name
       imgData.getData chara_next.name
 
+      result_sound.play()
+      result_sound.pause()
+
       # 考えるポーズの時間しばらく待機
       _addWait = if is_first then 1000 else 0 # 1回目は少し考える時間長く見せる
       is_first = false
@@ -174,6 +184,8 @@ $ ->
         , 1000
 
         $value.velocity opacity: 0, 300 if window.isSp
+
+        result_sound.play()
 
         # もう一度ボタンは遅れて表示
         _x = if window.isSp then 30 else 0

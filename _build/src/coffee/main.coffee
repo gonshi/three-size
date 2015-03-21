@@ -116,9 +116,10 @@ $ ->
              size_stat[ _type ].range
     _scale = 2 if _scale > 2
 
+    _vec = if window.isSp then -1 else 1
     _$value.velocity
       opacity: 1
-      translateX: 40 * _scale
+      translateX: 40 * _scale * _vec
       scale: _scale
     , 400, "spring"
 
@@ -131,14 +132,15 @@ $ ->
       # 考えるポーズの時間しばらく待機
       _addWait = if _count == 1 then 1000 else 0
       setTimeout ->
+        _vec = if window.isSp then 0 else 1
         if sex_next == "man"
           $boy.removeClass( "think" ).addClass( "surprised" ).velocity
-            translateX: -80
+            translateX: -80 * _vec
             scale: chara_scale
           , 400, "spring"
         else # woman or other
           $boy.removeClass( "think" ).addClass( "happy" ).velocity
-            translateX: -80
+            translateX: -80 * _vec
             translateY: -20
             scale: chara_scale
           , 300
@@ -148,20 +150,28 @@ $ ->
           translateX: 30
         , 1000
 
+        $value.velocity opacity: 0, 300
+
         # もう一度ボタンは遅れて表示
+        _x = if window.isSp then 30 else 0
         $again.delay( 2000 ).velocity
           opacity: 1
           scale: 1 / 0.8
+          translateX: _x
         , 300, "spring"
       , 2500 + Math.random() * 1500 + _addWait
 
   resizeHandler.listen "RESIZED", ->
     _win_height = $( window ).height()
-    if _win_height < MIN_HEIGHT
+    if window.isSp
+      chara_scale = 0.8
+    else if _win_height < MIN_HEIGHT
       chara_scale = _win_height / MIN_HEIGHT
     else
       chara_scale = 1
-    $girl.velocity scale: chara_scale, 1
+
+    if !window.isSp
+      $girl.velocity scale: chara_scale, 1
     $boy.velocity scale: chara_scale, 1
 
   imgData.listen "IMG_LOADED", ( results )->
@@ -178,7 +188,6 @@ $ ->
     _setNextChara()
 
     $value.velocity
-      opacity: 0
       translateX: 0
       scale: 1
 

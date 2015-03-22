@@ -122,6 +122,7 @@ $ ->
 
   $( ".girl .parts" ).on "click", ->
     _type = $( this ).data "type"
+    return if selected[ _type ]
     _$value = $( ".girl .value.#{ _type }" )
     _$value.find( ".length" ).text chara_next[ _type ]
     selected[ _type ] = true

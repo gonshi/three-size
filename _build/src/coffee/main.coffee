@@ -106,6 +106,7 @@ $ ->
           $bottom.attr "data-size": ( parseInt( t / 120 ) % 3 ) + 1
   
   $noticeContainer.find( ".notice-yes" ).on "click", ->
+    window.ga "send", "event", "notice-yes", "click", "quickly" # ga event test
     $noticeContainer.velocity
       opacity: 0
     , ->

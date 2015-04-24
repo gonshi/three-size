@@ -183,19 +183,52 @@
       +trbl(0, 0, 0, 0)
       width: 75%
 
+    .social
+      $type: "fb-share", "tweet", "line"
+      $width: 60px
+      float: left
+      width: 50%
+      text-align: center
+
+      #{$is_sp}
+        margin-left: 45px
+
+      @each $t in $type
+        .#{$t}
+          $img: "common/#{$t}.png"
+          display: inline-block
+          margin: 0 10px
+          vertical-align: middle 
+          +image-size($img, image-width($img)/$width)
+          opacity: 0
+
+          &:first-child
+            margin-left: 0
+          &:last-child
+            margin-right: 0
+
+        .line
+          display: none
+
+        #{$is_sp}
+          .line
+            display: inline-block
+
     .again
-      position: absolute
-      +trbl(auto, 0, 0, 0)
+      float: right
       // 初期状態では80%の大きさに指定(アニメーションで100%状態にする)
-      width: 70%
-      height: 12% * 0.8
+      width: 40%
+      height: 60px
       margin: auto
+      margin-right: 8% 
       font-size: 32px
       background: #fff
-      box-shadow: 0 0 2px 5px #000
+      box-shadow: 0 0 1px 2px #000
       border-radius: 20px
       opacity: 0
-      @extend %hoverEffect-opacity
+
+      #{$is_sp}
+        margin-right: 0
 
       .text
         position: absolute
@@ -209,9 +242,11 @@
     width: 100%
     height: 80%
     padding: 12% 15% 7%
+    margin-bottom: 40px
     +bg("common/balloon.png", 100% 100%)
 
     #{$is_sp}
+      margin-bottom: 60px
       padding: 20% 15% 7%
       +translate(40px, 40px)
 
@@ -262,6 +297,7 @@
       #{$is_sp}
         bottom: 6%
 
+  // 18歳以上ですか？
   .notice_container
     position: absolute
     +trbl(0, 0, 0, 0)

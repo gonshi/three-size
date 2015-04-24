@@ -1,6 +1,12 @@
 include /mixin/_conditionalComment
 doctype html
 html(lang="ja")
+  - var now = new Date();
+  - var month = ("00" + (now.getMonth() + 1)).slice(-2);
+  - var date = ("00" + now.getDate()).slice(-2);
+  - var hour = ("00" + now.getHours()).slice(-2);
+  - var minute = ("00" + now.getMinutes()).slice(-2);
+  - var dateParam = "" + month + date + hour + minute;
   head
     meta(charset="UTF-8")
     meta(http-equiv="X-UA-Compatible", content="IE=edge")
@@ -11,9 +17,9 @@ html(lang="ja")
       include /include/meta/_basicinfo
       include /include/meta/_viewport
     block style
-      link(rel="stylesheet", href="css/main.css", media="screen, print")
-      link(rel="shortcut icon", type="image/vnd.microsoft.icon", href="favicon.ico")
-      link(rel="icon", type="image/vnd.microsoft.icon", href="favicon.ico")
+      link(rel="stylesheet", href="css/main.css?_="+dateParam, media="screen, print")
+      link(rel="shortcut icon", type="image/vnd.microsoft.icon", href="favicon.ico?_="+dateParam)
+      link(rel="icon", type="image/vnd.microsoft.icon", href="favicon.ico?_="+dateParam)
       link(href="http://fonts.googleapis.com/css?family=Luckiest+Guy" rel="stylesheet" type="text/css")
     // script(type="text/javascript" src="//media.line.me/js/line-button.js?v=20140411")
     +ltIE9
@@ -76,8 +82,7 @@ html(lang="ja")
             state: true
           }; 
       if prod
-        script(src="js/app.min.js")
+        script(src="js/app.min.js?_="+dateParam)
       else
         script(src="js/app.js")
       include /include/script/_facebook
-      include /include/script/_twitter

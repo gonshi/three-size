@@ -16,6 +16,7 @@ else
 require "../js/velocity.min.js"
 require "./model/preload"
 ticker = require( "./util/ticker" )()
+social = require( "./util/social" )()
 resizeHandler = require( "./controller/resizeHandler" )()
 sizeData = require( "./model/sizeData" )()
 imgData = require( "./model/imgData" )()
@@ -25,16 +26,25 @@ $ ->
   # DECLARATION
   #####################################
 
-  $top = $( ".girl .parts.top" )
-  $middle = $( ".girl .parts.middle" )
-  $bottom = $( ".girl .parts.bottom" )
-  $girl = $( ".girl" )
   $boy = $( ".boy" )
-  $value = $( ".girl .value" )
-  $result = $( ".result_container" )
-  $pic = $( ".result .pic" )
-  $again = $( ".result_container .again" )
+
+  $girl = $( ".girl" )
+  $value = $girl.find( ".value" )
+  $top = $girl.find( ".parts.top" )
+  $middle = $girl.find( ".parts.middle" )
+  $bottom = $girl.find( ".parts.bottom" )
+
   $noticeContainer = $( ".notice_container" )
+
+  $result_container = $( ".result_container" )
+  $pic = $result_container.find( ".pic" )
+  $again = $result_container.find( ".again" )
+  $social = [
+    $result_container.find( ".fb-share" ),
+    $result_container.find( ".tweet" ),
+    $result_container.find( ".line" )
+  ]
+
   chara_scale = null
 
   chara_next = null
@@ -64,6 +74,7 @@ $ ->
 
   ORIGINAL_SIZE = []
   MIN_HEIGHT = 900
+  DUR = 500
 
   #####################################
   # PRIVATE
@@ -94,7 +105,7 @@ $ ->
       for sex of window.size
         ORIGINAL_SIZE[ sex ] = window.size[ sex ].concat()
       ticker.clear "checkLoad"
-      $( ".girl .guard" ).hide()
+      $girl.find( ".guard" ).hide()
       _setNextChara()
 
       ticker.listen "slot", ( t )->
@@ -105,6 +116,7 @@ $ ->
         if !selected.bottom
           $bottom.attr "data-size": ( parseInt( t / 120 ) % 3 ) + 1
   
+  # 18歳以上ですをクリック
   $noticeContainer.find( ".notice-yes" ).on "click", ->
     $noticeContainer.velocity
       opacity: 0
@@ -117,13 +129,14 @@ $ ->
         $( ".girl .advice" ).show().velocity
           opacity: 1
           translateX: -30
-        setTimeout (-> $( ".girl .advice" ).hide() ), 4000
-      , 2000
+        setTimeout (-> $( ".girl .advice" ).hide() ), DUR * 8
+      , DUR * 4
 
-  $( ".girl .parts" ).on "click", ->
+  # 女性の各パーツをクリック
+  $girl.find( ".parts" ).on "click", ->
     _type = $( this ).data "type"
     return if selected[ _type ]
-    _$value = $( ".girl .value.#{ _type }" )
+    _$value = $girl.find( ".value.#{ _type }" )
     _$value.find( ".length" ).text chara_next[ _type ]
     selected[ _type ] = true
 
@@ -144,16 +157,16 @@ $ ->
       opacity: 1
       translateX: 40 * _scale * _vec
       scale: _scale
-    , 400, "spring"
+    , DUR, "spring"
 
     # 3つそろった
     if selected.top && selected.middle && selected.bottom
-      setTimeout (-> $boy.addClass "think" ), 1000
-      $result.find( ".name" ).text chara_next.name
+      setTimeout (-> $boy.addClass "think" ), DUR * 2
+      $result_container.find( ".name" ).text chara_next.name
       imgData.getData chara_next.name
 
       # 考えるポーズの時間しばらく待機
-      _addWait = if is_first then 1000 else 0 # 1回目は少し考える時間長く見せる
+      _addWait = if is_first then DUR else 0 # 1回目は少し考える時間長く見せる
       is_first = false
       setTimeout ->
         _vec = if window.isSp then 0 else 1
@@ -161,29 +174,34 @@ $ ->
           $boy.removeClass( "think" ).addClass( "surprised" ).velocity
             translateX: -80 * _vec
             scale: chara_scale
-          , 400, "spring"
+          , DUR, "spring"
         else # woman or other
           $boy.removeClass( "think" ).addClass( "happy" ).velocity
             translateX: -80 * _vec
             translateY: -20
             scale: chara_scale
-          , 300
+          , DUR / 2
           
-        $result.show().velocity
+        $result_container.show().velocity
           opacity: 1
           translateX: 30
-        , 1000
+        , DUR * 2
 
-        $value.velocity opacity: 0, 300 if window.isSp
+        $value.velocity opacity: 0, DUR / 2 if window.isSp
 
-        # もう一度ボタンは遅れて表示
+        # もう一度ボタン, SNSボタンは遅れて表示
         _x = if window.isSp then 30 else 0
-        $again.delay( 2000 ).velocity
+        for i in [ 0...$social.length ]
+          $social[ i ].delay( DUR * 3.4 + ( i * 0.2 ) * DUR ).velocity
+            opacity: 1
+            scale: [ 1, 0.8 ]
+          , DUR, "spring"
+        $again.delay( DUR * 4 ).velocity
           opacity: 1
-          scale: 1 / 0.8
+          scale: [ 1, 0.8 ]
           translateX: _x
-        , 300, "spring"
-      , 2500 + Math.random() * 1500 + _addWait
+        , DUR, "spring"
+      , DUR * 5 + Math.random() * DUR * 3 + _addWait
 
   resizeHandler.listen "RESIZED", ->
     _win_height = $( window ).height()
@@ -216,20 +234,20 @@ $ ->
       translateX: 0
       scale: 1
 
-    $result.velocity
+    $result_container.velocity
       opacity: 0
       translateX: 0
     , ->
-      $result.hide()
+      $result_container.hide()
       # スロット再起動
       selected =
         top: false
         middle: false
         bottom: false
 
-    $again.velocity
-      opacity: 0
-      scale: 1
+    for i in [ 0...$social.length ]
+      $social[ i ].velocity opacity: 0, 50
+    $again.velocity opacity: 0, 50
 
     $pic.css "background-image": "none"
 
@@ -240,14 +258,14 @@ $ ->
   sizeData.getData()
   resizeHandler.exec()
   resizeHandler.dispatch "RESIZED", resizeHandler
+  social.exec "fb", "tweet"
 
   if window.isAndroid
     _zoom = window.innerWidth / 640
-    window.onload = ->
-      document.body.style.zoom = _zoom
+    window.onload = -> document.body.style.zoom = _zoom
 
     # css calc bug fix
-    $result.find( ".pic_container" ).css
+    $result_container.find( ".pic_container" ).css
       height: $( window ).height() / _zoom * 0.85 * 0.8 * 0.81 - 71
 
   if window.isSp

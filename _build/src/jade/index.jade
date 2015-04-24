@@ -1,4 +1,5 @@
 extends /layout/_application
+include /mixin/_social
 block body
   div.wrapper
     h1.ttl
@@ -32,6 +33,10 @@ block body
           p.pic.num3
           p.pic.num4
         p.notice.hiragino ※ Google Custom Search API
+      div.social
+        +fb-share("img/common/facebook.png")
+        +tweet("img/common/tweet.png")
+        +line("img/common/line.png")
       p.again
         button
           span.text もういちど

@@ -139,6 +139,8 @@ $ ->
     return if selected[ _type ]
     _$value = $girl.find( ".value.#{ _type }" )
     _$value.find( ".length" ).text chara_next[ _type ]
+    if window.isSp
+      $result_container.find( ".#{ _type } .length" ).text chara_next[ _type ]
     selected[ _type ] = true
 
     # サイズの画を描画

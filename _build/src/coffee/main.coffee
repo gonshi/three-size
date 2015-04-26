@@ -165,7 +165,8 @@ $ ->
     # 3つそろった
     if selected.top && selected.middle && selected.bottom
       fin_count += 1
-      window.ga "send", "event", "button", "click", "fin", fin_count # GA Event
+      window.ga "send", "event", "button",
+                "click", "fin-#{ fin_count }", 1 # GA Event
       setTimeout (-> $boy.addClass "think" ), DUR * 2
       $result_container.find( ".name" ).text chara_next.name
       imgData.getData chara_next.name

@@ -80,7 +80,7 @@ $ ->
   #####################################
   # PRIVATE
   #####################################
-  
+
   _setNextChara = ->
     _random = Math.random()
     if _random < 0.1 # 10%
@@ -116,7 +116,7 @@ $ ->
           $middle.attr "data-size": ( parseInt( t / 80 ) % 3 ) + 1
         if !selected.bottom
           $bottom.attr "data-size": ( parseInt( t / 120 ) % 3 ) + 1
-  
+
   # 18歳以上ですをクリック
   $noticeContainer.find( ".notice-yes" ).on "click", ->
     $noticeContainer.velocity
@@ -187,7 +187,7 @@ $ ->
             translateY: -20
             scale: chara_scale
           , DUR / 2
-          
+
         $result_container.show().velocity
           opacity: 1
           translateX: 30
@@ -225,7 +225,7 @@ $ ->
   imgData.listen "IMG_LOADED", ( results )->
     for i in [ 0...results.length ]
       $pic.eq( i ).css
-        "background-image": "url(#{ results[ i ].tbUrl })"
+        "background-image": "url(#{ results[ i ].image.thumbnailLink})"
 
   # reset
   $again.on "click", ->
@@ -260,7 +260,7 @@ $ ->
   #####################################
   # INIT
   #####################################
-  
+
   sizeData.getData()
   resizeHandler.exec()
   resizeHandler.dispatch "RESIZED", resizeHandler

@@ -12,8 +12,8 @@ class ImgData extends EventDispatcher
     $.ajax
       type: "get"
       url: "https://www.googleapis.com/customsearch/v1?" +
-           "key=AIzaSyDnLFO5WKX6LPVO4yEDZGsAqGIPVos-Gow&" +
-           "cx=016489218282066124601:rfqomcxwe0w&q=" +
+           "key=AIzaSyCykbiUpkEiXcmM7OQh_pdT9x7LeQIuj9g&" +
+           "cx=009941356438065580846:6dvuyglcydo&q=" +
            "#{ encodeURIComponent query }" +
            "&searchType=image&num=4"
     .done ( data )=>
